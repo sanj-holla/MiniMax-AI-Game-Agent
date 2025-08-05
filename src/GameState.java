@@ -280,13 +280,16 @@ public class GameState
 	 **/
 	public void printBoardState(String[] state)
 	{
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < state.length; i++)
+		for (int row = 0; row < GameAI.BOARD_SIZE; row++)
 		{
-			sb.append(state[i]);
+			for (int col = 0; col < GameAI.BOARD_SIZE; col++)
+			{
+				System.out.print("[" + state[(row * GameAI.BOARD_SIZE) + col] + "] ");
+			}
+			System.out.println();
 		}
-		Log.debug("Printing the board state " + sb.toString());
 	}
+
 
 
 	/**

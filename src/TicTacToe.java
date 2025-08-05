@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
-import javax.swing.SwingWorker;
 
 
 public class TicTacToe
@@ -102,7 +101,7 @@ public class TicTacToe
 						
 			
 			//	Display debugging information
-			Log.debug(String.format("[Current Move: %s] [Total Moves: %d]", HUMAN_PLAYER, letterCount));
+			System.out.println(String.format("[Current Move: %s] [Total Moves: %d]", HUMAN_PLAYER, letterCount));
 			agent.updateState( getBoardState() );
 
 			
@@ -131,32 +130,34 @@ public class TicTacToe
 					}
 					
 					@Override
-				    public void done() {
-						Log.debug("AI move selected!");
+					public void done() {
+						System.out.println("AI move selected!");
 						GameAI.showTotalCount();
-						
-						//	Update the game board
+
 						letterCount = letterCount + 1;
-						
-						try
-						{
-							updateBoardState(get());
-							
-							// Check whether the game has ended
-							if (checkGameEnd() == false)
-							{			
+
+						try {
+							String[] newBoard = get();
+							String[] oldBoard = getBoardState(); // Save board before update
+
+							// Print the AI's selected move in plain text
+							for (int i = 0; i < newBoard.length; i++) {
+								if (!oldBoard[i].equals(newBoard[i]) && !newBoard[i].equals("-")) {
+									System.out.println("Selected move: " + newBoard[i] + " at position " + i);
+									break;
+								}
+							}
+
+							updateBoardState(newBoard);
+
+							if (!checkGameEnd()) {
 								isPlayerTurn = true;
 							}
-						} 
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
-						} 
-						catch (ExecutionException e)
-						{
+						} catch (InterruptedException | ExecutionException e) {
 							e.printStackTrace();
 						}
 					}
+
 				};
 				
 				worker.execute();	
@@ -187,9 +188,9 @@ public class TicTacToe
 				
 				//	DEBUG CODE, ENABLE/DISABLE AS NEEDED
 				if (GameState.checkWinner(getBoardState(), HUMAN_PLAYER))
-					Log.debug("The human player wins");
+					System.out.println("The human player wins");
 				else
-					Log.debug("The AI wins");
+					System.out.println("The AI wins");
 				
 				playAgain = JOptionPane.showConfirmDialog(null, winner + " the game!  Do you want to play again?",
 						winner, JOptionPane.YES_NO_OPTION);
