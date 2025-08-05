@@ -10,6 +10,8 @@ The Minimax algorithm implemented here performs a complete search of the game tr
 Terminal states are evaluated using a utility function that returns +1 if the AI wins, -1 if the human wins, and 0 for a tie. The algorithm then propagates these values back up the game tree, with maximizing nodes choosing the highest value and minimizing nodes choosing the lowest value.
 
 # Performance
-Total States: The algorithm explores all possible game states from the current position
-Complexity: O(b^d) where b is branching factor and d is maximum depth
+Total States: The algorithm explores all possible game states from the current position 
+
+Complexity: O(b^d) where b is branching factor and d is maximum depth 
+
 Guaranteed Result: AI will never lose when playing optimally
